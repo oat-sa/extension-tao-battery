@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE structures SYSTEM "../doc/structures.dtd">
+<structures>
+	<structure id="taoBattery_main" name="taoBattery extension" level="15" group="main">
+		<description />
+		<sections>
+			<section id="taoBattery_main" name="taoBattery extension" url="/taoBattery/TaoBattery/index" />
+			<section id="taoBattery_other" name="Template" url="/taoBattery/TaoBattery/templateExample" />
+		</sections>
+	</structure>
+</structures>
