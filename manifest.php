@@ -30,7 +30,7 @@ return array(
     'version' => '0.0.2',
     'author' => 'Open Assessment Technologies SA',
     'requires' => array(
-        'tao' => '>=13.2.1'
+        'tao' => '>=13.1.3'
     ),
     'managementRole' => 'http://www.tao.lu/Ontologies/generis.rdf#taoBatteryManager',
     'acl' => array(
