@@ -32,8 +32,32 @@ class Updater extends \common_ext_ExtensionUpdater
     {
         if ($this->isVersion('0.0.1')) {
             OntologyUpdater::syncModels();
-            $this->getServiceManager()->register(BatteryService::SERVICE_ID, new RdfBatteryService());
-            $this->getServiceManager()->register(DeliveryPicker::SERVICE_ID, new RandomDeliveryPicker());
+            $batteryService = new RdfBatteryService();
+            $batteryService->setHeader(
+                '<?php' . PHP_EOL .
+                '/**' . PHP_EOL .
+                ' * Service to manage battery of deliveries' . PHP_EOL .
+                ' *' . PHP_EOL .
+                ' * MUST implements \oat\taoBattery\model\service\BatteryService' . PHP_EOL .
+                ' *' . PHP_EOL .
+                ' */' . PHP_EOL
+            );
+            $this->getServiceManager()->register(BatteryService::SERVICE_ID, $batteryService);
+
+            $deliveryPickerService = new RandomDeliveryPicker();
+            $deliveryPickerService->setHeader(
+                '<?php' . PHP_EOL .
+                '/**' . PHP_EOL .
+                ' * Battery delivery picker' . PHP_EOL .
+                ' *' . PHP_EOL .
+                ' * MUST implements \oat\taoBattery\model\picker\DeliveryPicker' . PHP_EOL .
+                ' *' . PHP_EOL .
+                ' * A component to extract the delivery from deliveries array provided by a battery' . PHP_EOL .
+                ' *' . PHP_EOL .
+                ' */' . PHP_EOL
+            );
+            $this->getServiceManager()->register(DeliveryPicker::SERVICE_ID, $deliveryPickerService);
+
             $this->setVersion('0.1.0');
         }
     }
