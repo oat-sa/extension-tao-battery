@@ -47,14 +47,6 @@ interface BatteryService
      public function createBattery($label, $deliveries);
 
     /**
-     * Check if battery exists
-     *
-     * @param $battery
-     * @return boolean
-     */
-     public function exists($battery);
-
-    /**
      * Fetch a battery by label
      *
      * @param $label
@@ -112,10 +104,10 @@ interface BatteryService
     /**
      * Check if the given delivery $uri is part of $battery deliveries list
      *
-     * @param $battery
+     * @param BatteryModel $battery
      * @param $uri
      * @return bool
      * @throws BatteryException
      */
-     public function isBatteryDelivery($battery, $uri);
+     public function isBatteryDelivery(BatteryModel $battery, $uri);
 }

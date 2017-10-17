@@ -59,17 +59,6 @@ class RdfBatteryService extends AbstractBatteryService
     }
 
     /**
-     * Check if battery exists
-     *
-     * @param RdfBattery $battery
-     * @return boolean
-     */
-    public function exists($battery)
-    {
-        return $battery->exists();
-    }
-
-    /**
      * Create a battery in ontology
      *
      * @param $label
@@ -191,7 +180,7 @@ class RdfBatteryService extends AbstractBatteryService
     }
 
     /**
-     * Check if battery is valid by checking if it belongs to battery root class
+     * Check if battery exists and is valid by checking if it belongs to battery root class
      *
      * @param RdfBattery|BatteryModel $battery
      * @return bool
@@ -205,18 +194,19 @@ class RdfBatteryService extends AbstractBatteryService
         if (in_array(self::BATTERY_URI, $typeUris)) {
             return true;
         }
+
         return false;
     }
 
     /**
      * Check if battery contains a delivery with the given $uri
      *
-     * @param \core_kernel_classes_Resource $battery
+     * @param BatteryModel $battery
      * @param $uri
      * @return bool
      * @throws BatteryException
      */
-    public function isBatteryDelivery($battery, $uri)
+    public function isBatteryDelivery(BatteryModel $battery, $uri)
     {
         /** @var ComplexSearchService $search */
         $search = $this->getServiceLocator()->get(ComplexSearchService::SERVICE_ID);
@@ -235,7 +225,7 @@ class RdfBatteryService extends AbstractBatteryService
 
         if ($result->count() == 1) {
             $foundBattery = $result[0];
-            if ($foundBattery->subject == $battery->getUri()) {
+            if ($foundBattery->subject == $battery->getId()) {
                 return true;
             }
         }

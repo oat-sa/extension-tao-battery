@@ -22,6 +22,7 @@ namespace oat\taoBattery\model\service;
 
 use oat\generis\model\OntologyAwareTrait;
 use oat\oatbox\service\ConfigurableService;
+use oat\taoBattery\model\model\BatteryModel;
 use oat\taoBattery\model\picker\DeliveryPicker;
 use oat\taoBattery\model\BatteryException;
 
@@ -57,7 +58,7 @@ abstract class AbstractBatteryService extends ConfigurableService implements Bat
      * @return bool
      * @throws BatteryException
      */
-    public function isBatteryDelivery($battery, $uri)
+    public function isBatteryDelivery(BatteryModel $battery, $uri)
     {
         $battery = $this->buildBattery($battery);
         foreach ($this->getBatteryDeliveries($battery) as $delivery) {
