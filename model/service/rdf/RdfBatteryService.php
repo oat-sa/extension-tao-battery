@@ -181,7 +181,13 @@ class RdfBatteryService extends AbstractBatteryService
      */
     public function getBatteryDeliveries(BatteryModel $battery)
     {
-        return $battery->getPropertyValues($this->getProperty(self::BATTERY_DELIVERIES));
+        $deliveries = $battery->getPropertyValues($this->getProperty(self::BATTERY_DELIVERIES));
+        foreach ($deliveries as $key => $delivery) {
+            if (!$this->isValidDelivery($delivery)) {
+                unset($deliveries[$key]);
+            }
+        }
+        return $deliveries;
     }
 
     /**

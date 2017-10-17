@@ -71,6 +71,63 @@ abstract class AbstractBatteryService extends ConfigurableService implements Bat
     }
 
     /**
+     * Check if a delivery is valid by checking the dates
+     *
+     * @param \core_kernel_classes_Resource $delivery
+     * @return bool
+     */
+    protected function isValidDelivery(\core_kernel_classes_Resource $delivery)
+    {
+        return $this->verifyTime($delivery);
+    }
+
+    /**
+     * Check if delivery start and end time make delivery available for now
+     *
+     * @param \core_kernel_classes_Resource $delivery
+     * @return bool
+     */
+    protected function verifyTime(\core_kernel_classes_Resource $delivery)
+    {
+        try {
+            $deliveryProps = $delivery->getPropertiesValues(array(
+                TAO_DELIVERY_START_PROP,
+                TAO_DELIVERY_END_PROP,
+            ));
+        } catch (\common_exception_InvalidArgumentType $e) {
+            return false;
+        }
+
+        $startExec = empty($deliveryProps[TAO_DELIVERY_START_PROP])
+            ? null
+            : (string)current($deliveryProps[TAO_DELIVERY_START_PROP]);
+        $stopExec = empty($deliveryProps[TAO_DELIVERY_END_PROP])
+            ? null
+            : (string)current($deliveryProps[TAO_DELIVERY_END_PROP]);
+
+        $startDate = date_create('@' . $startExec);
+        $endDate = date_create('@' . $stopExec);
+        if (!$this->areWeInRange($startDate, $endDate)) {
+            \common_Logger::d("Attempt to start the compiled delivery " . $delivery->getUri() . " at the wrong date");
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Check if the current date is in range of start and end date
+     *
+     * @param $startDate
+     * @param $endDate
+     * @return bool
+     */
+    protected function areWeInRange($startDate, $endDate)
+    {
+        return (empty($startDate) || date_create() >= $startDate)
+            && (empty($endDate) || date_create() <= $endDate);
+    }
+
+    /**
      * Get the delivery picker from taoBattery config
      *
      * @return DeliveryPicker
