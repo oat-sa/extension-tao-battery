@@ -25,6 +25,8 @@ use oat\taoBattery\model\model\BatteryModel;
 
 interface BatteryService
 {
+    const SERVICE_ID = 'taoBattery/batteryService';
+
     /**
      * Construct the battery model from the given battery param
      * Return an implementation of battery model, following the used service
@@ -95,4 +97,25 @@ interface BatteryService
      * @return bool
      */
      public function isValid(BatteryModel $battery);
+
+    /**
+     * Get a delivery from the given battery.
+     * A battery contains a list of deliveries, the deliveryPicker will extract one from this array.
+     * Return null if there is no valid delivery
+     *
+     * @param $battery
+     * @return \core_kernel_classes_Resource|null
+     * @throws BatteryException
+     */
+     public function pickDeliveryByBattery($battery);
+
+    /**
+     * Check if the given delivery $uri is part of $battery deliveries list
+     *
+     * @param $battery
+     * @param $uri
+     * @return bool
+     * @throws BatteryException
+     */
+     public function isBatteryDelivery($battery, $uri);
 }

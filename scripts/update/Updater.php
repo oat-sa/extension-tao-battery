@@ -21,6 +21,10 @@
 namespace oat\taoBattery\scripts\update;
 
 use oat\tao\scripts\update\OntologyUpdater;
+use oat\taoBattery\model\picker\DeliveryPicker;
+use oat\taoBattery\model\picker\random\RandomDeliveryPicker;
+use oat\taoBattery\model\service\BatteryService;
+use oat\taoBattery\model\service\rdf\RdfBatteryService;
 
 class Updater extends \common_ext_ExtensionUpdater
 {
@@ -28,6 +32,9 @@ class Updater extends \common_ext_ExtensionUpdater
     {
         if ($this->isVersion('0.0.1')) {
             OntologyUpdater::syncModels();
+            $this->getServiceManager()->register(BatteryService::SERVICE_ID, new RdfBatteryService());
+            $this->getServiceManager()->register(DeliveryPicker::SERVICE_ID, new RandomDeliveryPicker());
+            $this->setVersion('0.1.0');
         }
     }
 

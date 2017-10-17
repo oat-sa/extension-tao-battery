@@ -26,15 +26,4 @@
         <tao:TAOGUIOrder><![CDATA[3]]></tao:TAOGUIOrder>
     </rdf:Description>
 
-    <!-- Battery groups list -->
-    <rdf:Description rdf:about="http://www.taotesting.com/ontologies/battery.rdf#groups">
-        <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
-        <rdfs:label xml:lang="en-US"><![CDATA[Groups]]></rdfs:label>
-        <rdfs:comment xml:lang="en-US"><![CDATA[A list of groups linked to a Battery]]></rdfs:comment>
-        <rdfs:domain rdf:resource="http://www.taotesting.com/ontologies/battery.rdf#Battery"/>
-        <rdfs:range rdf:resource="http://www.tao.lu/Ontologies/TAOGroup.rdf#Group"/>
-        <generis:Multiple rdf:resource="http://www.tao.lu/Ontologies/generis.rdf#True"/>
-        <tao:TAOGUIOrder><![CDATA[4]]></tao:TAOGUIOrder>
-    </rdf:Description>
-
 </rdf:RDF>
