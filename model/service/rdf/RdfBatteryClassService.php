@@ -18,13 +18,13 @@
  *
  */
 
-namespace oat\taoBattery\model;
+namespace oat\taoBattery\model\service\rdf;
 
 /**
  * Class BatteryClassService. The service use from the Battery RdfController
  * @package oat\taoBattery\model
  */
-class BatteryClassService extends \tao_models_classes_ClassService
+class RdfBatteryClassService extends \tao_models_classes_ClassService
 {
     /**
      * Get battery root class
@@ -33,6 +33,6 @@ class BatteryClassService extends \tao_models_classes_ClassService
      */
     public function getRootClass()
     {
-        return $this->getClass(BatteryService::BATTERY_URI);
+        return $this->getClass(RdfBatteryService::BATTERY_URI);
     }
 }

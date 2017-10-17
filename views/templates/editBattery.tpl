@@ -16,10 +16,6 @@ use oat\tao\helpers\Template;
     <?= get_data('deliveriesTree')?>
 </div>
 
-<div class="data-container-wrapper flex-container-remainer">
-    <?= get_data('groupsTree')?>
-</div>
-
 <?php
 Template::inc('footer.tpl', 'tao');
 ?>

@@ -22,8 +22,8 @@ namespace oat\taoBattery\controller;
 
 use oat\generis\model\OntologyAwareTrait;
 use oat\tao\helpers\Template;
-use oat\taoBattery\model\BatteryClassService;
-use oat\taoBattery\model\model\BatteryResource;
+use oat\taoBattery\model\service\rdf\RdfBatteryClassService;
+use oat\taoBattery\model\service\rdf\RdfBatteryService;
 
 /**
  * Class Battery
@@ -40,7 +40,7 @@ class Battery extends \tao_actions_RdfController
      */
     public function __construct()
     {
-        $this->service = BatteryClassService::singleton();
+        $this->service = RdfBatteryClassService::singleton();
     }
 
     /**
@@ -139,20 +139,11 @@ class Battery extends \tao_actions_RdfController
         }
 
         // Display the tree of deliveries
-        $property = $this->getProperty(BatteryResource::BATTERY_DELIVERIES);
+        $property = $this->getProperty(RdfBatteryService::BATTERY_DELIVERIES);
         $tree = \tao_helpers_form_GenerisTreeForm::buildTree($battery, $property);
         $tree->setTitle(__('Deliveries'));
         $tree->setTemplate(Template::getTemplate('widgets/displayTree.tpl'));
         $this->setData('deliveriesTree', $tree->render());
-
-        /*
-        // Display the tree of groups
-        $property = $this->getProperty(BatteryService::BATTERY_GROUPS);
-        $tree = \tao_helpers_form_GenerisTreeForm::buildTree($battery, $property);
-        $tree->setTitle(__('Assign to'));
-        $tree->setTemplate(Template::getTemplate('widgets/displayTree.tpl'));
-        $this->setData('groupsTree', $tree->render());
-        */
 
         $this->setData('formTitle', __('Edit Battery'));
         $this->setData('form', $myForm->render());

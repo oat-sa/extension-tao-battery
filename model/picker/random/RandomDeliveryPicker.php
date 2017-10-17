@@ -18,30 +18,32 @@
  *
  */
 
-namespace oat\taoBattery\model\model;
+namespace oat\taoBattery\model\picker\random;
+
+use oat\generis\model\OntologyAwareTrait;
+use oat\oatbox\service\ConfigurableService;
+use oat\taoBattery\model\picker\DeliveryPicker;
 
 /**
- * Class BatteryResource
- * An ontology abstraction to data using \core_kernel_classes_Resource
- * @package oat\taoBattery\model\model
+ * Class RandomDeliveryPicker
+ * @package oat\taoBattery\model\picker
  */
-class BatteryResource extends \core_kernel_classes_Resource implements BatteryModel
+class RandomDeliveryPicker extends ConfigurableService implements DeliveryPicker
 {
-    const BATTERY_DELIVERIES = 'http://www.taotesting.com/ontologies/battery.rdf#deliveries';
+    use OntologyAwareTrait;
 
     /**
-     * @inheritdoc
+     * Pick a delivery randomly from $deliveries array
+     * If $deliveries array is empty, return null
+     *
+     * @param array $deliveries An array of delivery uris
+     * @return \core_kernel_classes_Resource|null
      */
-    public function getId()
+    public function pickDelivery(array $deliveries)
     {
-        return $this->getUri();
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getDeliveries()
-    {
-        return $this->getPropertyValues($this->getProperty(self::BATTERY_DELIVERIES));
+        if (empty($deliveries)) {
+            return null;
+        }
+        return $this->getResource($deliveries[array_rand($deliveries)]);
     }
 }

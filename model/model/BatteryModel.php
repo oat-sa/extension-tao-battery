@@ -34,11 +34,4 @@ interface BatteryModel
      * @return string
      */
     public function getId();
-
-    /**
-     * Get the deliveries associated to the current battery model
-     *
-     * @return \core_kernel_classes_Resource[]
-     */
-    public function getDeliveries();
 }

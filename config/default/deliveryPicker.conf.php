@@ -1,3 +1,3 @@
 <?php
 
-return new \oat\taoBattery\model\picker\RandomDeliveryPicker();
+return new \oat\taoBattery\model\picker\random\RandomDeliveryPicker();
