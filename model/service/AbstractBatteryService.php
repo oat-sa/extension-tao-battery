@@ -28,9 +28,7 @@ use oat\taoBattery\model\BatteryException;
 abstract class AbstractBatteryService extends ConfigurableService implements BatteryService
 {
     use OntologyAwareTrait;
-
-    const SERVICE_ID = 'taoBattery/batteryService';
-
+    
     /**
      * Get a delivery from the given battery.
      * A battery contains a list of deliveries, the deliveryPicker will extract one from this array.
