@@ -58,6 +58,8 @@ class Updater extends \common_ext_ExtensionUpdater
             );
             $this->getServiceManager()->register(DeliveryPicker::SERVICE_ID, $deliveryPickerService);
 
+            OntologyUpdater::syncModels();
+
             $this->setVersion('0.1.0');
         }
     }

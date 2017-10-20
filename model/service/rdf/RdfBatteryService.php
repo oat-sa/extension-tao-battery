@@ -187,25 +187,6 @@ class RdfBatteryService extends AbstractBatteryService
     }
 
     /**
-     * Check if battery exists and is valid by checking if it belongs to battery root class
-     *
-     * @param RdfBattery|BatteryModel $battery
-     * @return bool
-     */
-    public function isValid(BatteryModel $battery)
-    {
-        $typeUris = array_map(function($type) {
-            return $type->getUri();
-        }, $battery->getTypes());
-
-        if (in_array(self::BATTERY_URI, $typeUris)) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
      * Check if battery contains a delivery with the given $uri
      *
      * @param $battery
@@ -237,6 +218,25 @@ class RdfBatteryService extends AbstractBatteryService
             if ($foundBattery->subject == $battery->getId()) {
                 return true;
             }
+        }
+
+        return false;
+    }
+
+    /**
+     * Check if battery exists and is valid by checking if it belongs to battery root class
+     *
+     * @param RdfBattery|BatteryModel $battery
+     * @return bool
+     */
+    protected function isValid(BatteryModel $battery)
+    {
+        $typeUris = array_map(function($type) {
+            return $type->getUri();
+        }, $battery->getTypes());
+
+        if (in_array(self::BATTERY_URI, $typeUris)) {
+            return true;
         }
 
         return false;

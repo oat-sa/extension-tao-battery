@@ -89,14 +89,6 @@ interface BatteryService
      public function getBatteryDeliveries(BatteryModel $battery);
 
     /**
-     * Build the battery and check if valid
-     *
-     * @param $battery
-     * @return bool
-     */
-     public function isValid($battery);
-
-    /**
      * Get a delivery from the given battery.
      * A battery contains a list of deliveries, the deliveryPicker will extract one from this array.
      * Return null if there is no valid delivery
@@ -108,12 +100,13 @@ interface BatteryService
      public function pickDeliveryByBattery($battery);
 
     /**
+     * Build the battery
      * Check if the given delivery $uri is part of $battery deliveries list
      *
-     * @param BatteryModel $battery
+     * @param $battery
      * @param $uri
      * @return bool
      * @throws BatteryException
      */
-     public function isBatteryDelivery(BatteryModel $battery, $uri);
+     public function isBatteryDelivery($battery, $uri);
 }
