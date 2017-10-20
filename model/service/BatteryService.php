@@ -89,12 +89,12 @@ interface BatteryService
      public function getBatteryDeliveries(BatteryModel $battery);
 
     /**
-     * Check if battery is valid
+     * Build the battery and check if valid
      *
-     * @param BatteryModel $battery
+     * @param $battery
      * @return bool
      */
-     public function isValid(BatteryModel $battery);
+     public function isValid($battery);
 
     /**
      * Get a delivery from the given battery.

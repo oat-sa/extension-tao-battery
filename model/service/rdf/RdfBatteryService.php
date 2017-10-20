@@ -208,13 +208,15 @@ class RdfBatteryService extends AbstractBatteryService
     /**
      * Check if battery contains a delivery with the given $uri
      *
-     * @param BatteryModel $battery
+     * @param $battery
      * @param $uri
      * @return bool
      * @throws BatteryException
      */
-    public function isBatteryDelivery(BatteryModel $battery, $uri)
+    public function isBatteryDelivery($battery, $uri)
     {
+        $battery = $this->buildBattery($battery);
+
         /** @var ComplexSearchService $search */
         $search = $this->getServiceLocator()->get(ComplexSearchService::SERVICE_ID);
         $queryBuilder = $search->query();

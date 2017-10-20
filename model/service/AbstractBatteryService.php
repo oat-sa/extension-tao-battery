@@ -58,7 +58,7 @@ abstract class AbstractBatteryService extends ConfigurableService implements Bat
      * @return bool
      * @throws BatteryException
      */
-    public function isBatteryDelivery(BatteryModel $battery, $uri)
+    public function isBatteryDelivery($battery, $uri)
     {
         $battery = $this->buildBattery($battery);
         foreach (array_keys($this->getBatteryDeliveries($battery)) as $delivery) {
