@@ -29,7 +29,7 @@ use oat\taoBattery\model\BatteryException;
 abstract class AbstractBatteryService extends ConfigurableService implements BatteryService
 {
     use OntologyAwareTrait;
-    
+
     /**
      * Get a delivery from the given battery.
      * A battery contains a list of deliveries, the deliveryPicker will extract one from this array.
@@ -61,7 +61,7 @@ abstract class AbstractBatteryService extends ConfigurableService implements Bat
     public function isBatteryDelivery(BatteryModel $battery, $uri)
     {
         $battery = $this->buildBattery($battery);
-        foreach ($this->getBatteryDeliveries($battery) as $delivery) {
+        foreach (array_keys($this->getBatteryDeliveries($battery)) as $delivery) {
             if ($delivery == $uri) {
                 return true;
             }
@@ -77,7 +77,7 @@ abstract class AbstractBatteryService extends ConfigurableService implements Bat
      */
     protected function isValidDelivery(\core_kernel_classes_Resource $delivery)
     {
-        return $this->verifyTime($delivery);
+        return $delivery->exists() && $this->verifyTime($delivery);
     }
 
     /**

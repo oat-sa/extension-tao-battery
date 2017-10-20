@@ -48,8 +48,12 @@ class RdfBatteryService extends AbstractBatteryService
      */
     public function buildBattery($battery)
     {
+        if ($battery instanceof RdfBattery) {
+            return $battery;
+        }
+
         $battery = new RdfBattery($battery);
-        if ($battery->exists()) {
+        if (!$battery->exists()) {
             throw new BatteryModelException('The battery resource does not exist.');
         }
         if (!$this->isValid($battery)) {
@@ -134,6 +138,7 @@ class RdfBatteryService extends AbstractBatteryService
                 $battery->removePropertyValue($this->getProperty(self::BATTERY_DELIVERIES), $delivery->getUri());
             }
         }
+
     }
 
     /**
@@ -170,10 +175,12 @@ class RdfBatteryService extends AbstractBatteryService
      */
     public function getBatteryDeliveries(BatteryModel $battery)
     {
-        $deliveries = $battery->getPropertyValues($this->getProperty(self::BATTERY_DELIVERIES));
-        foreach ($deliveries as $key => $delivery) {
-            if (!$this->isValidDelivery($delivery)) {
-                unset($deliveries[$key]);
+        $deliveryUris = $battery->getPropertyValues($this->getProperty(self::BATTERY_DELIVERIES));
+        $deliveries = [];
+        foreach ($deliveryUris as $key => $deliveryUri) {
+            $delivery = $this->getResource($deliveryUri);
+            if ($this->isValidDelivery($delivery)) {
+                $deliveries[$key] = $delivery;
             }
         }
         return $deliveries;
