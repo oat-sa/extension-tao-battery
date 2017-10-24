@@ -1,11 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE structures SYSTEM "../doc/structures.dtd">
+<!DOCTYPE structures SYSTEM "../../tao/doc/structures.dtd">
 <structures>
-	<structure id="taoBattery_main" name="taoBattery extension" level="15" group="main">
-		<description />
-		<sections>
-			<section id="taoBattery_main" name="taoBattery extension" url="/taoBattery/TaoBattery/index" />
-			<section id="taoBattery_other" name="Template" url="/taoBattery/TaoBattery/templateExample" />
-		</sections>
-	</structure>
+<structure id="taoBattery_main" name="Battery" level="15" group="main">
+	<description />
+	<icon id="icon-filebox"/>
+	<sections>
+		<section id="taoBattery_main" name="Battery" url="/taoBattery/Battery/index">
+			<trees>
+				<tree name="Battery library"
+					  className="Battery"
+					  dataUrl="/taoBattery/Battery/getOntologyData"
+					  rootNode="http://www.taotesting.com/ontologies/battery.rdf#Battery"
+					  selectClass="battery-class-properties"
+					  selectInstance="battery-properties"
+				/>
+			</trees>
+			<actions allowClassActions="true">
+				<action id="battery-new" name="New battery" url="/taoBattery/Battery/create" context="resource" group="tree" binding="instanciate">
+					<icon id="icon-filebox"/>
+				</action>
+				<action id="battery-class-properties" name="Properties" url="/taoBattery/Battery/editBatteryClass" group="content" context="class">
+					<icon id="icon-edit"/>
+				</action>
+				<action id="battery-properties" name="Properties"  url="/taoBattery/Battery/editInstance" group="content" context="instance">
+					<icon id="icon-edit"/>
+				</action>
+				<action id="battery-class-new" name="New class" url="/taoBattery/Battery/addSubClass" context="resource" group="tree" binding="subClass">
+					<icon id="icon-folder-open"/>
+				</action>
+				<action id="battery-delete" name="Delete" url="/taoBattery/Battery/delete" context="instance" group="tree" binding="removeNode" >
+					<icon id="icon-bin"/>
+				</action>
+				<action id="battery-class-delete" name="Delete" url="/taoBattery/Battery/deleteClass" context="class" group="tree" binding="removeNode" >
+					<icon id="icon-bin"/>
+				</action>
+				<action id="battery-move" name="Move" url="/taoBattery/Battery/moveInstance" context="instance" group="none" binding="moveNode">
+					<icon id="icon-move-item"/>
+				</action>
+			</actions>
+		</section>
+	</sections>
+</structure>
 </structures>

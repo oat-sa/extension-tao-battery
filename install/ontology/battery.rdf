@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<rdf:RDF
+        xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+        xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+        xml:base="http://www.taotesting.com/ontologies/blueprint.rdf#"
+        xmlns:widget="http://www.tao.lu/datatypes/WidgetDefinitions.rdf#"
+        xmlns:generis="http://www.tao.lu/Ontologies/generis.rdf#"
+        xmlns:tao="http://www.tao.lu/Ontologies/TAO.rdf#"
+>
+    <!-- Class to represent deliveries battery -->
+    <!-- Contains a label and deliveries list -->
+    <rdf:Description rdf:about="http://www.taotesting.com/ontologies/battery.rdf#Battery">
+        <rdfs:label xml:lang="en-US"><![CDATA[Battery]]></rdfs:label>
+        <rdfs:comment xml:lang="en-US"><![CDATA[Battery of deliveries]]></rdfs:comment>
+        <rdfs:subClassOf rdf:resource="http://www.tao.lu/Ontologies/TAO.rdf#TAOObject"/>
+    </rdf:Description>
+
+    <!-- Battery deliveries list -->
+    <rdf:Description rdf:about="http://www.taotesting.com/ontologies/battery.rdf#deliveries">
+        <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+        <rdfs:label xml:lang="en-US"><![CDATA[Deliveries]]></rdfs:label>
+        <rdfs:comment xml:lang="en-US"><![CDATA[A list of deliveries linked to a Battery]]></rdfs:comment>
+        <rdfs:domain rdf:resource="http://www.taotesting.com/ontologies/battery.rdf#Battery"/>
+        <rdfs:range rdf:resource="http://www.tao.lu/Ontologies/TAODelivery.rdf#AssembledDelivery"/>
+        <generis:Multiple rdf:resource="http://www.tao.lu/Ontologies/generis.rdf#True"/>
+        <tao:TAOGUIOrder><![CDATA[3]]></tao:TAOGUIOrder>
+    </rdf:Description>
+
+</rdf:RDF>
