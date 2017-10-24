@@ -41,10 +41,10 @@ interface BatteryService
      * Create a battery
      *
      * @param $label
-     * @param $deliveries
+     * @param array $deliveries
      * @return mixed
      */
-     public function createBattery($label, $deliveries);
+     public function createBattery($label, array $deliveries);
 
     /**
      * Fetch a battery by label

@@ -69,7 +69,7 @@ class RdfBatteryService extends AbstractBatteryService
      * @param $deliveries
      * @return \core_kernel_classes_Resource
      */
-    public function createBattery($label, $deliveries)
+    public function createBattery($label, array $deliveries)
     {
         return RdfBatteryClassService::singleton()->getRootClass()->createInstanceWithProperties(array(
             RDFS_LABEL => $label,
