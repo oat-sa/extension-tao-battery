@@ -122,8 +122,8 @@ class RdfBatteryService extends AbstractBatteryService
         $search = $this->getServiceLocator()->get(ComplexSearchService::SERVICE_ID);
         $queryBuilder = $search->query();
 
-        $myQuery = $search->searchType($queryBuilder, self::BATTERY_URI)
-            ->add(self::BATTERY_DELIVERIES)->equals($delivery->getUri());
+        $myQuery = $search->searchType($queryBuilder, self::BATTERY_URI, true)
+            ->add(self::BATTERY_DELIVERIES)->contains($delivery->getUri());
 
         $queryBuilder->setCriteria($myQuery);
         try {
@@ -165,6 +165,22 @@ class RdfBatteryService extends AbstractBatteryService
 
         }
         return $battery;
+    }
+
+    /**
+     * Add a delivery to battery
+     * Delete delivery from other battery
+     *
+     * @param \core_kernel_classes_Resource $battery
+     * @param \core_kernel_classes_Resource $delivery
+     * @throws BatteryException
+     */
+    public function addDeliveryToBattery(\core_kernel_classes_Resource $battery, \core_kernel_classes_Resource $delivery)
+    {
+        $this->deleteDeliveryFromBatteries($delivery);
+        $battery->setPropertyValue(
+            $this->getProperty(RdfBatteryService::BATTERY_DELIVERIES), $delivery
+        );
     }
 
     /**
