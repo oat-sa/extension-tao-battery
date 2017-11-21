@@ -219,7 +219,7 @@ class RdfBatteryService extends AbstractBatteryService
         $queryBuilder = $search->query();
 
         $myQuery = $search->searchType($queryBuilder, self::BATTERY_URI)
-            ->add(self::BATTERY_DELIVERIES)->equals($uri)
+            ->add(self::BATTERY_DELIVERIES)->contains($uri)
         ;
 
         $queryBuilder->setCriteria($myQuery);
