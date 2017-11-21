@@ -56,7 +56,7 @@ class RdfBatteryService extends AbstractBatteryService
         if (!$battery->exists()) {
             throw new BatteryModelException('The battery resource does not exist.');
         }
-        if (!$this->isValid($battery)) {
+        if (!$battery->isInstanceOf($this->getClass(self::BATTERY_URI))) {
             throw new BatteryModelException('The battery resource is not under Battery Root Class.');
         }
         return $battery;
@@ -118,6 +118,25 @@ class RdfBatteryService extends AbstractBatteryService
      */
     public function deleteDeliveryFromBatteries(\core_kernel_classes_Resource $delivery)
     {
+        $batteries = $this->findDeliveryBattery($delivery);
+        if (!empty($batteries)) {
+            /** @var \core_kernel_classes_Resource $battery */
+            foreach ($batteries as $battery) {
+                $battery->removePropertyValue($this->getProperty(self::BATTERY_DELIVERIES), $delivery->getUri());
+            }
+        }
+
+    }
+
+    /**
+     * Find all batteries where the delivery is used
+     *
+     * @param \core_kernel_classes_Resource $delivery
+     * @return array
+     * @throws BatteryException
+     */
+    public function findDeliveryBattery(\core_kernel_classes_Resource $delivery)
+    {
         /** @var ComplexSearchService $search */
         $search = $this->getServiceLocator()->get(ComplexSearchService::SERVICE_ID);
         $queryBuilder = $search->query();
@@ -132,13 +151,15 @@ class RdfBatteryService extends AbstractBatteryService
             throw new BatteryException('A search runtime exception has occurred.', 0, $e);
         }
 
+        $batteries = [];
         if ($result->count() > 0) {
             /** @var \core_kernel_classes_Resource $battery */
             foreach ($result as $battery) {
-                $battery->removePropertyValue($this->getProperty(self::BATTERY_DELIVERIES), $delivery->getUri());
+                $batteries[$battery->getUri()] = $battery;
             }
         }
 
+        return $batteries;
     }
 
     /**
@@ -218,7 +239,7 @@ class RdfBatteryService extends AbstractBatteryService
         $search = $this->getServiceLocator()->get(ComplexSearchService::SERVICE_ID);
         $queryBuilder = $search->query();
 
-        $myQuery = $search->searchType($queryBuilder, self::BATTERY_URI)
+        $myQuery = $search->searchType($queryBuilder, self::BATTERY_URI, true)
             ->add(self::BATTERY_DELIVERIES)->contains($uri)
         ;
 
@@ -229,7 +250,7 @@ class RdfBatteryService extends AbstractBatteryService
             throw new BatteryException('A search runtime exception has occurred.', 0, $e);
         }
 
-        if ($result->count() == 1) {
+        if ($result->count() != 0) {
             $foundBattery = $result[0];
             if ($foundBattery->subject == $battery->getId()) {
                 return true;
@@ -239,22 +260,4 @@ class RdfBatteryService extends AbstractBatteryService
         return false;
     }
 
-    /**
-     * Check if battery exists and is valid by checking if it belongs to battery root class
-     *
-     * @param RdfBattery|BatteryModel $battery
-     * @return bool
-     */
-    protected function isValid(BatteryModel $battery)
-    {
-        $typeUris = array_map(function($type) {
-            return $type->getUri();
-        }, $battery->getTypes());
-
-        if (in_array(self::BATTERY_URI, $typeUris)) {
-            return true;
-        }
-
-        return false;
-    }
 }
