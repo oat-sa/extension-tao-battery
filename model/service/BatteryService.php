@@ -64,7 +64,16 @@ interface BatteryService
      public function deleteDeliveryFromBatteries(\core_kernel_classes_Resource $delivery);
 
     /**
-     * Add a delivery to a battery.
+     * Find all batteries where the delivery is used
+     *
+     * @param \core_kernel_classes_Resource $delivery
+     * @return array
+     * @throws BatteryException
+     */
+    public function findDeliveryBattery(\core_kernel_classes_Resource $delivery);
+
+    /**
+     * Add deliveries to a battery.
      * If delivery exists for another battery, delete it from others
      *
      * @param $batteryLabel
@@ -73,6 +82,16 @@ interface BatteryService
      * @throws BatteryException
      */
      public function addDeliveriesToBattery($batteryLabel, array $deliveries);
+
+    /**
+     * Add a delivery to battery
+     * Delete delivery from other battery
+     *
+     * @param \core_kernel_classes_Resource $battery
+     * @param \core_kernel_classes_Resource $delivery
+     * @throws BatteryException
+     */
+    public function addDeliveryToBattery(\core_kernel_classes_Resource $battery, \core_kernel_classes_Resource $delivery);
 
     /**
      * Get all deliveries associated to a battery
