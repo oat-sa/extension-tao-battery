@@ -106,7 +106,7 @@ class RdfBatteryService extends AbstractBatteryService
         } elseif ($result->count() == 0) {
             return null;
         } else {
-            throw new BatteryException('Battery with same label are detected.');
+            throw new BatteryException("Battery with same label ($label) are detected.");
         }
     }
 
@@ -157,6 +157,28 @@ class RdfBatteryService extends AbstractBatteryService
             foreach ($result as $battery) {
                 $batteries[$battery->getUri()] = $battery;
             }
+        }
+
+        return $batteries;
+    }
+
+    /**
+     * Find all batteries without any delivery
+     *
+     * @return array|RdfBattery[]
+     * @throws BatteryException
+     */
+    public function findEmptyBatteries()
+    {
+        $batteries = [];
+
+        /** @var \core_kernel_classes_Resource $instance */
+        foreach ($this->getClass(self::BATTERY_URI)->getInstances(true) as $instance) {
+            $battery = $this->buildBattery($instance->getUri());
+            if ($this->getBatteryDeliveries($battery)) {
+                continue;
+            }
+            $batteries[$battery->getUri()] = $battery;
         }
 
         return $batteries;

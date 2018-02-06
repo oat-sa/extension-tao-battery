@@ -73,6 +73,14 @@ interface BatteryService
     public function findDeliveryBattery(\core_kernel_classes_Resource $delivery);
 
     /**
+     * Find all batteries without any delivery
+     *
+     * @return array|BatteryModel[]
+     * @throws BatteryException
+     */
+    public function findEmptyBatteries();
+
+    /**
      * Add deliveries to a battery.
      * If delivery exists for another battery, delete it from others
      *
