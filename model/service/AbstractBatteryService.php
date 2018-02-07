@@ -25,6 +25,7 @@ use oat\oatbox\service\ConfigurableService;
 use oat\taoBattery\model\model\BatteryModel;
 use oat\taoBattery\model\picker\DeliveryPicker;
 use oat\taoBattery\model\BatteryException;
+use oat\taoDeliveryRdf\model\DeliveryAssemblyService;
 
 abstract class AbstractBatteryService extends ConfigurableService implements BatteryService
 {
@@ -90,19 +91,19 @@ abstract class AbstractBatteryService extends ConfigurableService implements Bat
     {
         try {
             $deliveryProps = $delivery->getPropertiesValues(array(
-                TAO_DELIVERY_START_PROP,
-                TAO_DELIVERY_END_PROP,
+                DeliveryAssemblyService::PROPERTY_START,
+                DeliveryAssemblyService::PROPERTY_END,
             ));
         } catch (\common_exception_InvalidArgumentType $e) {
             return false;
         }
 
-        $startExec = empty($deliveryProps[TAO_DELIVERY_START_PROP])
+        $startExec = empty($deliveryProps[DeliveryAssemblyService::PROPERTY_START])
             ? null
-            : (string)current($deliveryProps[TAO_DELIVERY_START_PROP]);
-        $stopExec = empty($deliveryProps[TAO_DELIVERY_END_PROP])
+            : (string)current($deliveryProps[DeliveryAssemblyService::PROPERTY_START]);
+        $stopExec = empty($deliveryProps[DeliveryAssemblyService::PROPERTY_END])
             ? null
-            : (string)current($deliveryProps[TAO_DELIVERY_END_PROP]);
+            : (string)current($deliveryProps[DeliveryAssemblyService::PROPERTY_END]);
 
         $startDate = date_create('@' . $startExec);
         $endDate = date_create('@' . $stopExec);

@@ -73,6 +73,14 @@ interface BatteryService
     public function findDeliveryBattery(\core_kernel_classes_Resource $delivery);
 
     /**
+     * Find all batteries without any delivery
+     *
+     * @return array|BatteryModel[]
+     * @throws BatteryException
+     */
+    public function findEmptyBatteries();
+
+    /**
      * Add deliveries to a battery.
      * If delivery exists for another battery, delete it from others
      *
@@ -97,15 +105,15 @@ interface BatteryService
      * Get all deliveries associated to a battery
      * Should return deliveries array at format:
      * `array(
-         'uri1' => 'label1',
-         'uri2' => 'label2',
+     * 'uri1' => 'label1',
+     * 'uri2' => 'label2',
      * )`
      * Should an empty array in case of no deliveries
-     *
      * @param BatteryModel $battery
+     * @param bool $all - if true will be returned all attached deliveries, not only valid
      * @return array
      */
-     public function getBatteryDeliveries(BatteryModel $battery);
+     public function getBatteryDeliveries(BatteryModel $battery, $all = false);
 
     /**
      * Get a delivery from the given battery.
