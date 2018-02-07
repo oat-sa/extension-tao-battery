@@ -175,7 +175,7 @@ class RdfBatteryService extends AbstractBatteryService
         /** @var \core_kernel_classes_Resource $instance */
         foreach ($this->getClass(self::BATTERY_URI)->getInstances(true) as $instance) {
             $battery = $this->buildBattery($instance->getUri());
-            if ($this->getBatteryDeliveries($battery)) {
+            if ($this->getBatteryDeliveries($battery, true)) {
                 continue;
             }
             $batteries[$battery->getUri()] = $battery;
@@ -228,17 +228,17 @@ class RdfBatteryService extends AbstractBatteryService
 
     /**
      * Get all deliveries associated to a battery
-     *
      * @param RdfBattery|BatteryModel $battery
+     * @param bool $all - if true will be returned all attached deliveries, not only valid
      * @return array
      */
-    public function getBatteryDeliveries(BatteryModel $battery)
+    public function getBatteryDeliveries(BatteryModel $battery, $all = false)
     {
         $deliveryUris = $battery->getPropertyValues($this->getProperty(self::BATTERY_DELIVERIES));
         $deliveries = [];
         foreach ($deliveryUris as $key => $deliveryUri) {
             $delivery = $this->getResource($deliveryUri);
-            if ($this->isValidDelivery($delivery)) {
+            if ($this->isValidDelivery($delivery) || $all) {
                 $deliveries[$key] = $delivery;
             }
         }

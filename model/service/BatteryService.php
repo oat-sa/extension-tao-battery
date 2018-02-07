@@ -105,15 +105,15 @@ interface BatteryService
      * Get all deliveries associated to a battery
      * Should return deliveries array at format:
      * `array(
-         'uri1' => 'label1',
-         'uri2' => 'label2',
+     * 'uri1' => 'label1',
+     * 'uri2' => 'label2',
      * )`
      * Should an empty array in case of no deliveries
-     *
      * @param BatteryModel $battery
+     * @param bool $all - if true will be returned all attached deliveries, not only valid
      * @return array
      */
-     public function getBatteryDeliveries(BatteryModel $battery);
+     public function getBatteryDeliveries(BatteryModel $battery, $all = false);
 
     /**
      * Get a delivery from the given battery.
