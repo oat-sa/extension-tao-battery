@@ -8,19 +8,22 @@
 		<section id="taoBattery_main" name="Battery" url="/taoBattery/Battery/index">
 			<trees>
 				<tree name="Battery library"
-					  className="Battery"
-					  dataUrl="/taoBattery/Battery/getOntologyData"
-					  rootNode="http://www.taotesting.com/ontologies/battery.rdf#Battery"
-					  selectClass="battery-class-properties"
-					  selectInstance="battery-properties"
+                                    className="Battery"
+                                    dataUrl="/taoBattery/Battery/getOntologyData"
+                                    rootNode="http://www.taotesting.com/ontologies/battery.rdf#Battery"
+                                    selectClass="battery-class-properties"
+                                    selectInstance="battery-properties"
 				/>
 			</trees>
 			<actions allowClassActions="true">
 				<action id="battery-new" name="New battery" url="/taoBattery/Battery/create" context="resource" group="tree" binding="instanciate">
 					<icon id="icon-filebox"/>
 				</action>
-				<action id="battery-class-properties" name="Properties" url="/taoBattery/Battery/editBatteryClass" group="content" context="class">
+				<action id="battery-class-properties" name="Properties" url="/taoBattery/Battery/editClassLabel" group="content" context="class">
 					<icon id="icon-edit"/>
+				</action>
+				<action id="battery-class-schema" name="Manage Schema" url="/taoBattery/Battery/editBatteryClass" group="content" context="class">
+					<icon id="icon-property-add"/>
 				</action>
 				<action id="battery-properties" name="Properties"  url="/taoBattery/Battery/editInstance" group="content" context="instance">
 					<icon id="icon-edit"/>

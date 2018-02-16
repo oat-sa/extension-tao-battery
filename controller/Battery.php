@@ -65,14 +65,14 @@ class Battery extends \tao_actions_RdfController
                     if($clazz instanceof \core_kernel_classes_Resource){
                         $this->setData("selectNode", \tao_helpers_Uri::encode($clazz->getUri()));
                     }
-                    $this->setData('message', __('Class saved'));
+                    $this->setData('message', __('Class schema saved'));
                     $this->setData('reload', true);
                 }
             }
         } else {
             $myForm->setActions(array());
         }
-        $this->setData('formTitle', __('Edit battery class'));
+        $this->setData('formTitle', __('Edit battery class schema'));
         $this->setData('myForm', $myForm->render());
         $this->setView('form.tpl', 'tao');
     }
