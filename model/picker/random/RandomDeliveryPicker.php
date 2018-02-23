@@ -44,6 +44,9 @@ class RandomDeliveryPicker extends ConfigurableService implements DeliveryPicker
         if (empty($deliveries)) {
             return null;
         }
-        return $this->getResource($deliveries[array_rand($deliveries)]);
+
+        $key = mt_rand(0, count($deliveries));
+
+        return $this->getResource($deliveries[$key]);
     }
 }
