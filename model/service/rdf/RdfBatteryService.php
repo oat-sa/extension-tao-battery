@@ -20,6 +20,7 @@
 
 namespace oat\taoBattery\model\service\rdf;
 
+use common_Logger;
 use oat\generis\model\kernel\persistence\smoothsql\search\ComplexSearchService;
 use oat\search\base\exception\SearchGateWayExeption;
 use oat\taoBattery\model\model\BatteryModel;
@@ -262,8 +263,7 @@ class RdfBatteryService extends AbstractBatteryService
         $queryBuilder = $search->query();
 
         $myQuery = $search->searchType($queryBuilder, self::BATTERY_URI, true)
-            ->add(self::BATTERY_DELIVERIES)->contains($uri)
-        ;
+            ->add(self::BATTERY_DELIVERIES)->contains($uri);
 
         $queryBuilder->setCriteria($myQuery);
         try {
@@ -272,14 +272,22 @@ class RdfBatteryService extends AbstractBatteryService
             throw new BatteryException('A search runtime exception has occurred.', 0, $e);
         }
 
-        if ($result->count() != 0) {
-            $foundBattery = $result[0];
-            if ($foundBattery->subject == $battery->getId()) {
-                return true;
-            }
+        if ($result->count() === 0) {
+            return false;
         }
 
-        return false;
+        if ($result->count() > 1) {
+            common_Logger::w(sprintf('Found more than one battery for delivery %s', $uri));
+        }
+
+        $batteries = [];
+        $result->rewind();
+        while ($result->valid()) {
+            $batteries[] = $result->current()->getUri();
+            $result->next();
+        }
+
+        return in_array($battery->getId(), $batteries);
     }
 
 }
