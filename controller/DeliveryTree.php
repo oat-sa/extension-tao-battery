@@ -46,7 +46,7 @@ class DeliveryTree extends \tao_actions_GenerisTree
         $request = GetTreeRequest::create($this->getRequest());
 
         $request->setFilters([
-            new Filter(DeliveryAssemblyService::PROPERTY_DELIVERY_TIME, null, FilterOperator::createIsNotNull())
+            new Filter(DeliveryAssemblyService::PROPERTY_DELIVERY_RUNTIME, null, FilterOperator::createIsNotNull())
         ]);
 
         $response = $service->handle($request);
