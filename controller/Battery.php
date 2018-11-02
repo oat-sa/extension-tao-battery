@@ -142,6 +142,7 @@ class Battery extends \tao_actions_RdfController
         $property = $this->getProperty(RdfBatteryService::BATTERY_DELIVERIES);
         $tree = \tao_helpers_form_GenerisTreeForm::buildTree($battery, $property);
         $tree->setTitle(__('Deliveries'));
+        $tree->setData('dataUrl', _url('getData', 'DeliveryTree'));
         $tree->setData('saveUrl', _url('setValues', 'DeliveryTree'));
         $tree->setTemplate(Template::getTemplate('widgets/displayTree.tpl'));
         $this->setData('deliveriesTree', $tree->render());

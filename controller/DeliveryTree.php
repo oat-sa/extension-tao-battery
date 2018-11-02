@@ -20,13 +20,39 @@
 
 namespace oat\taoBattery\controller;
 
+use common_Exception;
+use common_exception_IsAjaxAction;
+use oat\generis\model\kernel\persistence\smoothsql\search\filter\Filter;
+use oat\generis\model\kernel\persistence\smoothsql\search\filter\FilterOperator;
 use oat\generis\model\OntologyAwareTrait;
+use oat\tao\model\Tree\GetTreeRequest;
+use oat\tao\model\Tree\GetTreeService;
 use oat\taoBattery\model\BatteryException;
 use oat\taoBattery\model\service\BatteryService;
+use oat\taoDeliveryRdf\model\DeliveryAssemblyService;
 
 class DeliveryTree extends \tao_actions_GenerisTree
 {
     use OntologyAwareTrait;
+
+    /**
+     * @throws common_Exception
+     * @throws common_exception_IsAjaxAction
+     */
+    public function getData()
+    {
+        /** @var GetTreeService $service */
+        $service = $this->getServiceLocator()->get(GetTreeService::SERVICE_ID);
+        $request = GetTreeRequest::create($this->getRequest());
+
+        $request->setFilters([
+            new Filter(DeliveryAssemblyService::PROPERTY_DELIVERY_RUNTIME, null, FilterOperator::createIsNotNull())
+        ]);
+
+        $response = $service->handle($request);
+
+        return $this->returnJson($response->getTreeArray());
+    }
 
     /**
      * Callback for delivery tree to register deliveries to battery
