@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2017 (original work) Open Assessment Technologies SA;
+ * Copyright (c) 2017-2018 (original work) Open Assessment Technologies SA;
  *
  */
 
@@ -32,17 +32,6 @@ use oat\taoBattery\model\service\rdf\RdfBatteryService;
  */
 class Battery extends \tao_actions_RdfController
 {
-    use OntologyAwareTrait;
-
-    /**
-     * Battery constructor.
-     * Instantiate the battery service
-     */
-    public function __construct()
-    {
-        $this->service = RdfBatteryClassService::singleton();
-    }
-
     /**
      * Edit a battery class
      *
@@ -84,7 +73,7 @@ class Battery extends \tao_actions_RdfController
      */
     public function create()
     {
-        if(! \tao_helpers_Request::isAjax()){
+        if(!$this->isXmlHttpRequest()){
             throw new \Exception(__("Wrong request mode"));
         }
 
@@ -162,5 +151,18 @@ class Battery extends \tao_actions_RdfController
     protected function getRootClass()
     {
         return $this->getClassService()->getRootClass();
+    }
+
+    /**
+     * Get class service
+     *
+     * @return RdfBatteryClassService|\tao_models_classes_ClassService|\tao_models_classes_Service
+     */
+    protected function getClassService()
+    {
+        if (is_null($this->service)) {
+            $this->service = RdfBatteryClassService::singleton();
+        }
+        return $this->service;
     }
 }
