@@ -24,7 +24,6 @@ use common_Exception;
 use common_exception_IsAjaxAction;
 use oat\generis\model\kernel\persistence\smoothsql\search\filter\Filter;
 use oat\generis\model\kernel\persistence\smoothsql\search\filter\FilterOperator;
-use oat\generis\model\OntologyAwareTrait;
 use oat\tao\model\Tree\GetTreeRequest;
 use oat\tao\model\Tree\GetTreeService;
 use oat\taoBattery\model\BatteryException;

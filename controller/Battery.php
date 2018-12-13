@@ -20,7 +20,6 @@
 
 namespace oat\taoBattery\controller;
 
-use oat\generis\model\OntologyAwareTrait;
 use oat\tao\helpers\Template;
 use oat\taoBattery\model\service\rdf\RdfBatteryClassService;
 use oat\taoBattery\model\service\rdf\RdfBatteryService;
