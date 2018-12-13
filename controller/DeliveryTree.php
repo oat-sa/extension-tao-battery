@@ -24,7 +24,6 @@ use common_Exception;
 use common_exception_IsAjaxAction;
 use oat\generis\model\kernel\persistence\smoothsql\search\filter\Filter;
 use oat\generis\model\kernel\persistence\smoothsql\search\filter\FilterOperator;
-use oat\generis\model\OntologyAwareTrait;
 use oat\tao\model\Tree\GetTreeRequest;
 use oat\tao\model\Tree\GetTreeService;
 use oat\taoBattery\model\BatteryException;
@@ -33,8 +32,6 @@ use oat\taoDeliveryRdf\model\DeliveryAssemblyService;
 
 class DeliveryTree extends \tao_actions_GenerisTree
 {
-    use OntologyAwareTrait;
-
     /**
      * @throws common_Exception
      * @throws common_exception_IsAjaxAction
@@ -57,12 +54,12 @@ class DeliveryTree extends \tao_actions_GenerisTree
     /**
      * Callback for delivery tree to register deliveries to battery
      * Foreach deliveries received, it will be deleted from all batteries before set it to current
-     * 
+     *
      * @throws \common_exception_IsAjaxAction
      */
     public function setValues()
     {
-        if (!\tao_helpers_Request::isAjax()) {
+        if (!$this->isXmlHttpRequest()) {
             throw new \common_exception_IsAjaxAction(__FUNCTION__);
         }
 
