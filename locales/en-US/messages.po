@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TAO 3.2.0-sprint61\n"
-"PO-Revision-Date: 2017-10-09T15:49:22\n"
+"Project-Id-Version: TAO 3.3.0-sprint91\n"
+"PO-Revision-Date: 2018-12-14T14:04:17\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: en-US\n"
@@ -13,14 +13,65 @@ msgstr ""
 "X-Poedit-KeywordsList: __\n"
 "X-Poedit-SearchPath-0: .\n"
 
-msgid "Hello World"
+msgid "An error has occurred during battery runtime"
+msgstr ""
+
+msgid "An error has occurred during fetching battery data model."
+msgstr ""
+
+msgid "An error has occurred when picking up a delivery from battery."
 msgstr ""
 
 #, tao-public
-msgid "taoBattery extension"
+msgid "Battery"
 msgstr ""
 
 #, tao-public
-msgid "Template"
+msgid "Battery library"
+msgstr ""
+
+msgid "Battery saved"
+msgstr ""
+
+msgid "Class schema saved"
+msgstr ""
+
+#, tao-public
+msgid "Delete"
+msgstr ""
+
+msgid "Deliveries"
+msgstr ""
+
+msgid "Edit Battery"
+msgstr ""
+
+msgid "Edit battery class schema"
+msgstr ""
+
+#, tao-public
+msgid "Manage Schema"
+msgstr ""
+
+#, tao-public
+msgid "Move"
+msgstr ""
+
+#, tao-public
+msgid "New battery"
+msgstr ""
+
+#, tao-public
+msgid "New class"
+msgstr ""
+
+#, tao-public
+msgid "Properties"
+msgstr ""
+
+msgid "Save"
+msgstr ""
+
+msgid "Wrong request mode"
 msgstr ""
 
