@@ -34,4 +34,9 @@ interface BatteryModel
      * @return string
      */
     public function getId();
+
+    /**
+     * @return string
+     */
+    public function getLabel();
 }
