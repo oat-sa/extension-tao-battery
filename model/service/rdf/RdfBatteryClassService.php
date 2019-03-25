@@ -20,6 +20,9 @@
 
 namespace oat\taoBattery\model\service\rdf;
 
+use oat\taoBattery\model\event\BatteryBeforeRemoveEvent;
+use oat\taoBattery\model\event\BatteryRemovedEvent;
+
 /**
  * Class BatteryClassService. The service use from the Battery RdfController
  * @package oat\taoBattery\model
@@ -34,5 +37,19 @@ class RdfBatteryClassService extends \tao_models_classes_ClassService
     public function getRootClass()
     {
         return $this->getClass(RdfBatteryService::BATTERY_URI);
+    }
+
+    /**
+     * Delete a resource
+     *
+     * @param \core_kernel_classes_Resource $resource
+     * @return boolean
+     */
+    public function deleteResource(\core_kernel_classes_Resource $resource)
+    {
+        $this->getEventManager()->trigger(new BatteryBeforeRemoveEvent($resource->getUri()));
+        $result = $resource->delete();
+        $this->getEventManager()->trigger(new BatteryRemovedEvent($resource->getUri()));
+        return $result;
     }
 }
