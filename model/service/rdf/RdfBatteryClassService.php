@@ -22,6 +22,7 @@ namespace oat\taoBattery\model\service\rdf;
 
 use oat\taoBattery\model\event\BatteryBeforeRemoveEvent;
 use oat\taoBattery\model\event\BatteryRemovedEvent;
+use oat\taoBattery\model\event\BatteryRemoveFailedEvent;
 
 /**
  * Class BatteryClassService. The service use from the Battery RdfController
@@ -39,6 +40,7 @@ class RdfBatteryClassService extends \tao_models_classes_ClassService
         return $this->getClass(RdfBatteryService::BATTERY_URI);
     }
 
+    /** @noinspection PhpDocMissingThrowsInspection */
     /**
      * Delete a resource
      *
@@ -47,9 +49,24 @@ class RdfBatteryClassService extends \tao_models_classes_ClassService
      */
     public function deleteResource(\core_kernel_classes_Resource $resource)
     {
-        $this->getEventManager()->trigger(new BatteryBeforeRemoveEvent($resource->getUri()));
-        $result = $resource->delete();
-        $this->getEventManager()->trigger(new BatteryRemovedEvent($resource->getUri()));
+        try {
+            $this->getEventManager()->trigger(new BatteryBeforeRemoveEvent($resource->getUri()));
+            $result = $resource->delete();
+        }
+        catch (\Throwable $e) {
+            // If some BatteryBeforeRemoveEvent event handler wants to prevent battery removing and
+            // throws the exception we have to ensure that other BatteryRemoveFailedEvent subscribers
+            // will be notified
+            $this->getEventManager()->trigger(new BatteryRemoveFailedEvent($resource->getUri()));
+            /** @noinspection PhpUnhandledExceptionInspection */
+            throw $e;
+        }
+
+        $resultEvent = $result
+            ? new BatteryRemovedEvent($resource->getUri())
+            : new BatteryRemoveFailedEvent($resource->getUri());
+        $this->getEventManager()->trigger($resultEvent);
+
         return $result;
     }
 }
