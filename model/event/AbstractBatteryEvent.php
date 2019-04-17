@@ -16,33 +16,34 @@
  *
  * Copyright (c) 2019 (original work) Open Assessment Technologies SA;
  */
-
 namespace oat\taoBattery\model\event;
 
-use oat\oatbox\event\Event;
+use core_kernel_classes_Resource as Resource;
 
-class AbstractBatteryEvent implements Event
+/**
+ * Class AbstractBatteryEvent
+ * @package oat\taoBattery\model\event
+ */
+class AbstractBatteryEvent implements BatteryEventInterface
 {
     /**
-     * @var string
+     * @var Resource
      */
-    protected $batteryId;
+    private $battery;
+    /**
+     * @var array
+     */
+    private $newValues;
 
     /**
      * AbstractBatteryEvent constructor.
-     * @param string $batteryId
+     * @param Resource $battery
+     * @param array $newValues
      */
-    public function __construct($batteryId)
+    public function __construct(Resource $battery, array $newValues)
     {
-        $this->batteryId = $batteryId;
-    }
-
-    /**
-     * @return string
-     */
-    public function getBatteryId()
-    {
-        return $this->batteryId;
+        $this->battery = $battery;
+        $this->newValues = $newValues;
     }
 
     /**
@@ -51,5 +52,20 @@ class AbstractBatteryEvent implements Event
     public function getName()
     {
         return static::class;
+    }
+
+    /**
+     * Specify data which should be serialized to JSON
+     * @link https://php.net/manual/en/jsonserializable.jsonserialize.php
+     * @return mixed data which can be serialized by <b>json_encode</b>,
+     * which is a value of any type other than a resource.
+     * @since 5.4.0
+     */
+    public function jsonSerialize()
+    {
+        return [
+            'subject' => $this->battery->getUri(),
+            'changes' => $this->newValues
+        ];
     }
 }

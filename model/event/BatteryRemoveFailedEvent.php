@@ -27,4 +27,5 @@ namespace oat\taoBattery\model\event;
  */
 class BatteryRemoveFailedEvent extends AbstractBatteryEvent
 {
+    const ACTION = 'Failed Battery Removal';
 }

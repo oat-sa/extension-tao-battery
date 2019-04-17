@@ -20,7 +20,10 @@
 
 namespace oat\taoBattery\controller;
 
+use oat\oatbox\event\EventManager;
 use oat\tao\helpers\Template;
+use oat\taoBattery\model\event\BatteryCreatedEvent;
+use oat\taoBattery\model\event\BatteryModifiedEvent;
 use oat\taoBattery\model\service\rdf\RdfBatteryClassService;
 use oat\taoBattery\model\service\rdf\RdfBatteryService;
 
@@ -85,6 +88,7 @@ class Battery extends \tao_actions_RdfController
 
         $label = $this->getClassService()->createUniqueLabel($clazz);
         $item = $this->getClassService()->createInstance($clazz, $label);
+        $this->getEventManager()->trigger(new BatteryCreatedEvent($item, [$label]));
 
         if(! is_null($item)){
             $response = array(
@@ -112,18 +116,16 @@ class Battery extends \tao_actions_RdfController
         $myFormContainer = new \tao_actions_form_Instance($clazz, $battery);
 
         $myForm = $myFormContainer->getForm();
-        if($myForm->isSubmited()){
-            if($myForm->isValid()){
+        if ($myForm->isSubmited() && $myForm->isValid()) {
+            $values = $myForm->getValues();
+            // save properties
+            $binder = new \tao_models_classes_dataBinding_GenerisFormDataBinder($battery);
+            $battery = $binder->bind($values);
+            $message = __('Battery saved');
+            $this->getEventManager()->trigger(new BatteryModifiedEvent($battery, $values));
 
-                $values = $myForm->getValues();
-                // save properties
-                $binder = new \tao_models_classes_dataBinding_GenerisFormDataBinder($battery);
-                $battery = $binder->bind($values);
-                $message = __('Battery saved');
-
-                $this->setData('message', $message);
-                $this->setData('reload', true);
-            }
+            $this->setData('message', $message);
+            $this->setData('reload', true);
         }
 
         // Display the tree of deliveries
@@ -139,6 +141,14 @@ class Battery extends \tao_actions_RdfController
         $this->setData('form', $myForm->render());
         $this->setData('uri', $battery->getUri());
         $this->setView('editBattery.tpl', 'taoBattery');
+    }
+
+    /**
+     * @return array|object|EventManager
+     */
+    private function getEventManager()
+    {
+        return $this->serviceLocator->get(EventManager::SERVICE_ID);
     }
 
     /**

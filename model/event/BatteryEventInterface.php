@@ -19,11 +19,13 @@
 
 namespace oat\taoBattery\model\event;
 
+use oat\oatbox\event\Event;
+use \JsonSerializable;
+
 /**
- * Class BatteryRemovedEvent
+ * Interface BatteryEventInterface
  * @package oat\taoBattery\model\event
  */
-class BatteryRemovedEvent extends AbstractBatteryEvent
+interface BatteryEventInterface extends Event, JsonSerializable
 {
-    const ACTION = 'Battery removed';
 }
