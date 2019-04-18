@@ -20,7 +20,6 @@
 
 namespace oat\taoBattery\controller;
 
-use oat\oatbox\event\EventManager;
 use oat\oatbox\event\EventManagerAwareTrait;
 use oat\tao\helpers\Template;
 use oat\taoBattery\model\event\BatteryCreatedEvent;
