@@ -25,7 +25,9 @@ namespace oat\taoBattery\model\event;
  *
  * Subscribers are expected not to throw exceptions during event handling
  */
-class BatteryRemoveFailedEvent extends AbstractBatteryEvent
+class BatteryRemoveFailedEvent
 {
     const ACTION = 'Failed Battery Removal';
+
+
 }

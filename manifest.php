@@ -17,7 +17,7 @@
  * Copyright (c) 2017 (original work) Open Assessment Technologies SA;
  */
 
-use oat\taoBattery\scripts\install\RegisterEvents;
+use oat\taoBattery\install\RegisterEvents;
 use oat\taoBattery\scripts\update\Updater;
 
 /**

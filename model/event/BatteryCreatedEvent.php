@@ -26,4 +26,12 @@ namespace oat\taoBattery\model\event;
 class BatteryCreatedEvent extends AbstractBatteryEvent
 {
     const ACTION = 'Battery created';
+
+    /**
+     * @return string
+     */
+    public function getBatteryAction()
+    {
+        return self::ACTION;
+    }
 }

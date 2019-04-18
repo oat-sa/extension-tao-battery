@@ -21,6 +21,7 @@
 namespace oat\taoBattery\controller;
 
 use oat\oatbox\event\EventManager;
+use oat\oatbox\event\EventManagerAwareTrait;
 use oat\tao\helpers\Template;
 use oat\taoBattery\model\event\BatteryCreatedEvent;
 use oat\taoBattery\model\event\BatteryModifiedEvent;
@@ -34,6 +35,7 @@ use oat\taoBattery\model\service\rdf\RdfBatteryService;
  */
 class Battery extends \tao_actions_RdfController
 {
+    use EventManagerAwareTrait;
     /**
      * Edit a battery class
      *
@@ -141,14 +143,6 @@ class Battery extends \tao_actions_RdfController
         $this->setData('form', $myForm->render());
         $this->setData('uri', $battery->getUri());
         $this->setView('editBattery.tpl', 'taoBattery');
-    }
-
-    /**
-     * @return array|object|EventManager
-     */
-    private function getEventManager()
-    {
-        return $this->serviceLocator->get(EventManager::SERVICE_ID);
     }
 
     /**

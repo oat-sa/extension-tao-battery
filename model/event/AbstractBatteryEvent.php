@@ -24,7 +24,7 @@ use core_kernel_classes_Resource as Resource;
  * Class AbstractBatteryEvent
  * @package oat\taoBattery\model\event
  */
-class AbstractBatteryEvent implements BatteryEventInterface
+abstract class AbstractBatteryEvent implements BatteryEventInterface
 {
     /**
      * @var Resource
@@ -68,4 +68,9 @@ class AbstractBatteryEvent implements BatteryEventInterface
             'changes' => $this->newValues
         ];
     }
+
+    /**
+     * @return string
+     */
+    abstract public function getBatteryAction();
 }

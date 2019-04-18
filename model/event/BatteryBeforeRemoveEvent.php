@@ -19,6 +19,28 @@
 
 namespace oat\taoBattery\model\event;
 
-class BatteryBeforeRemoveEvent extends AbstractBatteryEvent
+class BatteryBeforeRemoveEvent
 {
+    /**
+     * @var string
+     */
+    protected $batteryId;
+
+
+    /**
+     * AbstractBatteryEvent constructor.
+     * @param string $batteryId
+     */
+    public function __construct($batteryId)
+    {
+        $this->batteryId = $batteryId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBatteryId()
+    {
+        return $this->batteryId;
+    }
 }

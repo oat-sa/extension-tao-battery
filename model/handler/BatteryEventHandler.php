@@ -33,13 +33,14 @@ class BatteryEventHandler extends ConfigurableService
 
     /**
      * Handle batteries events
+     * @param BatteryEventInterface $event
      * @return string
      * @throws \common_exception_Error
      * @throws \oat\oatbox\service\exception\InvalidServiceManagerException
      */
     public function logBatteryChangesEntry(BatteryEventInterface $event)
     {
-        $this->getLoggerService()->setAction($event::ACTION);
+        $this->getLoggerService()->setAction($event->getBatteryAction());
         $this->getLoggerService()->log($event);
     }
 

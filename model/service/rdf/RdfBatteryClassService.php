@@ -20,7 +20,6 @@
 
 namespace oat\taoBattery\model\service\rdf;
 
-use oat\taoBattery\model\event\BatteryBeforeRemoveEvent;
 use oat\taoBattery\model\event\BatteryRemovedEvent;
 use oat\taoBattery\model\event\BatteryRemoveFailedEvent;
 

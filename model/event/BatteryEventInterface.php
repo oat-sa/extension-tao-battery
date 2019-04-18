@@ -28,4 +28,5 @@ use \JsonSerializable;
  */
 interface BatteryEventInterface extends Event, JsonSerializable
 {
+    public function getBatteryAction();
 }

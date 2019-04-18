@@ -17,11 +17,12 @@
  * Copyright (c) 2019 (original work) Open Assessment Technologies SA;
  */
 
-namespace oat\taoBattery\scripts\install;
+namespace oat\taoBattery\install;
 
 use oat\oatbox\extension\InstallAction;
 use oat\taoBattery\model\event\BatteryCreatedEvent;
 use oat\taoBattery\model\event\BatteryModifiedEvent;
+use oat\taoBattery\model\event\BatteryRemovedEvent;
 use oat\taoBattery\model\event\BatteryRemoveFailedEvent;
 use oat\taoBattery\model\handler\BatteryEventHandler;
 
@@ -32,11 +33,17 @@ use oat\taoBattery\model\handler\BatteryEventHandler;
 class RegisterEvents extends InstallAction
 {
 
+    /**
+     * @param $params
+     * @throws \common_Exception
+     * @throws \oat\oatbox\service\exception\InvalidServiceManagerException
+     */
     public function __invoke($params)
     {
+        $this->getServiceManager()->register(BatteryEventHandler::SERVICE_ID, new BatteryEventHandler());
         $this->registerEvent(BatteryCreatedEvent::class , [BatteryEventHandler::SERVICE_ID , 'logBatteryChangesEntry']);
         $this->registerEvent(BatteryModifiedEvent::class , [BatteryEventHandler::SERVICE_ID , 'logBatteryChangesEntry']);
-        $this->registerEvent(BatteryModifiedEvent::class , [BatteryEventHandler::SERVICE_ID , 'logBatteryChangesEntry']);
+        $this->registerEvent(BatteryRemovedEvent::class , [BatteryEventHandler::SERVICE_ID , 'logBatteryChangesEntry']);
         $this->registerEvent(BatteryRemoveFailedEvent::class , [BatteryEventHandler::SERVICE_ID , 'logBatteryChangesEntry']);
     }
 }
