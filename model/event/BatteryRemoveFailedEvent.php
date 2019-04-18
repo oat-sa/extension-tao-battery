@@ -25,9 +25,15 @@ namespace oat\taoBattery\model\event;
  *
  * Subscribers are expected not to throw exceptions during event handling
  */
-class BatteryRemoveFailedEvent
+class BatteryRemoveFailedEvent extends AbstractBatteryEvent
 {
     const ACTION = 'Failed Battery Removal';
 
-
+    /**
+     * @return string
+     */
+    public function getBatteryAction()
+    {
+        return self::ACTION;
+    }
 }

@@ -38,6 +38,7 @@ class BatteryBeforeRemoveEvent
 
     /**
      * @return string
+     * @deprecated
      */
     public function getBatteryId()
     {
