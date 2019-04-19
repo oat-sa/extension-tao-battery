@@ -25,6 +25,7 @@ use oat\tao\scripts\update\OntologyUpdater;
 use oat\taoBattery\model\event\BatteryCreatedEvent;
 use oat\taoBattery\model\event\BatteryModifiedEvent;
 use oat\taoBattery\model\event\BatteryRemovedEvent;
+use oat\taoBattery\model\event\BatteryRemoveFailedEvent;
 use oat\taoBattery\model\handler\BatteryEventHandler;
 use oat\taoBattery\model\picker\DeliveryPicker;
 use oat\taoBattery\model\picker\random\RandomDeliveryPicker;
@@ -77,6 +78,7 @@ class Updater extends \common_ext_ExtensionUpdater
             $eventManager->attach(BatteryCreatedEvent::class, [BatteryEventHandler::SERVICE_ID, 'logBatteryCreateEntry']);
             $eventManager->attach(BatteryModifiedEvent::class, [BatteryEventHandler::SERVICE_ID, 'logBatteryModifyEntry']);
             $eventManager->attach(BatteryRemovedEvent::class, [BatteryEventHandler::SERVICE_ID, 'logBatteryModifyEntry']);
+            $eventManager->attach(BatteryRemoveFailedEvent::class, [BatteryEventHandler::SERVICE_ID, 'logBatteryModifyEntry']);
             $this->getServiceManager()->register(EventManager::SERVICE_ID, $eventManager);
             $this->setVersion('0.6.4');
         }
