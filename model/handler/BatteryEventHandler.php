@@ -34,7 +34,6 @@ class BatteryEventHandler extends ConfigurableService
     /**
      * Handle batteries events
      * @param BatteryEventInterface $event
-     * @return string
      * @throws \common_exception_Error
      * @throws \oat\oatbox\service\exception\InvalidServiceManagerException
      */
