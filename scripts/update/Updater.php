@@ -20,7 +20,13 @@
 
 namespace oat\taoBattery\scripts\update;
 
+use oat\oatbox\event\EventManager;
 use oat\tao\scripts\update\OntologyUpdater;
+use oat\taoBattery\model\event\BatteryCreatedEvent;
+use oat\taoBattery\model\event\BatteryModifiedEvent;
+use oat\taoBattery\model\event\BatteryRemovedEvent;
+use oat\taoBattery\model\event\BatteryRemoveFailedEvent;
+use oat\taoBattery\model\handler\BatteryEventHandler;
 use oat\taoBattery\model\picker\DeliveryPicker;
 use oat\taoBattery\model\picker\random\RandomDeliveryPicker;
 use oat\taoBattery\model\service\BatteryService;
@@ -64,6 +70,18 @@ class Updater extends \common_ext_ExtensionUpdater
         }
 
         $this->skip('0.1.0', '0.6.3');
+        if ($this->isVersion('0.6.3')) {
+            // events
+            /** @var EventManager $eventManager */
+            $this->getServiceManager()->register(BatteryEventHandler::SERVICE_ID, new BatteryEventHandler());
+            $eventManager = $this->getServiceManager()->get(EventManager::SERVICE_ID);
+            $eventManager->attach(BatteryCreatedEvent::class, [BatteryEventHandler::SERVICE_ID, 'logBatteryChangesEntry']);
+            $eventManager->attach(BatteryModifiedEvent::class, [BatteryEventHandler::SERVICE_ID, 'logBatteryChangesEntry']);
+            $eventManager->attach(BatteryRemovedEvent::class, [BatteryEventHandler::SERVICE_ID, 'logBatteryChangesEntry']);
+            $eventManager->attach(BatteryRemoveFailedEvent::class, [BatteryEventHandler::SERVICE_ID, 'logBatteryChangesEntry']);
+            $this->getServiceManager()->register(EventManager::SERVICE_ID, $eventManager);
+            $this->setVersion('0.6.4');
+        }
     }
 
 }

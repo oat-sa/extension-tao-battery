@@ -15,9 +15,10 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
  * Copyright (c) 2017 (original work) Open Assessment Technologies SA;
- *
- *
  */
+
+use oat\taoBattery\install\RegisterEvents;
+use oat\taoBattery\scripts\update\Updater;
 
 /**
  * Generated using taoDevTools 3.1.1
@@ -27,7 +28,7 @@ return array(
     'label' => 'taoBattery extension',
     'description' => 'An extension to assign test-takers to a battery of deliveries instead of one delivery',
     'license' => 'GPL-2.0',
-    'version' => '0.6.3',
+    'version' => '0.6.4',
     'author' => 'Open Assessment Technologies SA',
     'requires' => array(
         'tao' => '>=21.15.0',
@@ -38,13 +39,16 @@ return array(
         array('grant', 'http://www.tao.lu/Ontologies/generis.rdf#taoBatteryManager', array('ext'=>'taoBattery')),
     ),
     'install' => array(
+        'php' => [
+            RegisterEvents::class,
+        ],
         'rdf' => array(
             dirname(__FILE__) . '/install/ontology/battery.rdf',
         )
     ),
     'uninstall' => array(
     ),
-    'update' => \oat\taoBattery\scripts\update\Updater::class,
+    'update' => Updater::class,
     'routes' => array(
         '/taoBattery' => 'oat\\taoBattery\\controller'
     ),
