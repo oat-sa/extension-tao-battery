@@ -75,10 +75,10 @@ class Updater extends \common_ext_ExtensionUpdater
             /** @var EventManager $eventManager */
             $this->getServiceManager()->register(BatteryEventHandler::SERVICE_ID, new BatteryEventHandler());
             $eventManager = $this->getServiceManager()->get(EventManager::SERVICE_ID);
-            $eventManager->attach(BatteryCreatedEvent::class, [BatteryEventHandler::SERVICE_ID, 'logBatteryCreateEntry']);
-            $eventManager->attach(BatteryModifiedEvent::class, [BatteryEventHandler::SERVICE_ID, 'logBatteryModifyEntry']);
-            $eventManager->attach(BatteryRemovedEvent::class, [BatteryEventHandler::SERVICE_ID, 'logBatteryModifyEntry']);
-            $eventManager->attach(BatteryRemoveFailedEvent::class, [BatteryEventHandler::SERVICE_ID, 'logBatteryModifyEntry']);
+            $eventManager->attach(BatteryCreatedEvent::class, [BatteryEventHandler::SERVICE_ID, 'logBatteryChangesEntry']);
+            $eventManager->attach(BatteryModifiedEvent::class, [BatteryEventHandler::SERVICE_ID, 'logBatteryChangesEntry']);
+            $eventManager->attach(BatteryRemovedEvent::class, [BatteryEventHandler::SERVICE_ID, 'logBatteryChangesEntry']);
+            $eventManager->attach(BatteryRemoveFailedEvent::class, [BatteryEventHandler::SERVICE_ID, 'logBatteryChangesEntry']);
             $this->getServiceManager()->register(EventManager::SERVICE_ID, $eventManager);
             $this->setVersion('0.6.4');
         }
