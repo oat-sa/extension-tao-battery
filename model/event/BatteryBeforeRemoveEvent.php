@@ -19,8 +19,11 @@
 
 namespace oat\taoBattery\model\event;
 
-class BatteryBeforeRemoveEvent
+use \core_kernel_classes_Resource as Resource;
+
+class BatteryBeforeRemoveEvent extends AbstractBatteryEvent
 {
+    const ACTION = 'Before battery removal';
     /**
      * @var string
      */
@@ -28,12 +31,13 @@ class BatteryBeforeRemoveEvent
 
 
     /**
-     * AbstractBatteryEvent constructor.
-     * @param string $batteryId
+     * @param Resource $resource
+     * @param $newValues
      */
-    public function __construct($batteryId)
+    public function __construct(Resource $resource, $newValues)
     {
-        $this->batteryId = $batteryId;
+        parent::__construct($resource, $newValues);
+        $this->batteryId = $resource->getUri();
     }
 
     /**
@@ -43,5 +47,13 @@ class BatteryBeforeRemoveEvent
     public function getBatteryId()
     {
         return $this->batteryId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBatteryAction()
+    {
+        return self::ACTION;
     }
 }
