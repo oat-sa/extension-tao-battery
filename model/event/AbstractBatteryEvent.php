@@ -20,23 +20,19 @@ namespace oat\taoBattery\model\event;
 
 use core_kernel_classes_Resource as Resource;
 
-/**
- * Class AbstractBatteryEvent
- * @package oat\taoBattery\model\event
- */
 abstract class AbstractBatteryEvent implements BatteryEventInterface
 {
     /**
      * @var Resource
      */
-    private $battery;
+    protected $battery;
+
     /**
      * @var array
      */
-    private $newValues;
+    protected $newValues;
 
     /**
-     * AbstractBatteryEvent constructor.
      * @param Resource $battery
      * @param array $newValues
      */
@@ -44,6 +40,22 @@ abstract class AbstractBatteryEvent implements BatteryEventInterface
     {
         $this->battery = $battery;
         $this->newValues = $newValues;
+    }
+
+    /**
+     * @return Resource
+     */
+    public function getBattery()
+    {
+        return $this->battery;
+    }
+
+    /**
+     * @return array
+     */
+    public function getNewValues()
+    {
+        return $this->newValues;
     }
 
     /**
@@ -55,11 +67,7 @@ abstract class AbstractBatteryEvent implements BatteryEventInterface
     }
 
     /**
-     * Specify data which should be serialized to JSON
-     * @link https://php.net/manual/en/jsonserializable.jsonserialize.php
-     * @return mixed data which can be serialized by <b>json_encode</b>,
-     * which is a value of any type other than a resource.
-     * @since 5.4.0
+     * @return array
      */
     public function jsonSerialize()
     {

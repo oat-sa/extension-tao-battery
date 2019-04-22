@@ -82,6 +82,8 @@ class Updater extends \common_ext_ExtensionUpdater
             $this->getServiceManager()->register(EventManager::SERVICE_ID, $eventManager);
             $this->setVersion('0.6.4');
         }
+
+        $this->skip('0.6.4', '0.6.5');
     }
 
 }
