@@ -19,6 +19,19 @@
 
 namespace oat\taoBattery\model\event;
 
+/**
+ * Class BatteryRemovedEvent
+ * @package oat\taoBattery\model\event
+ */
 class BatteryRemovedEvent extends AbstractBatteryEvent
 {
+    const ACTION = 'Battery removed';
+
+    /**
+     * @return string
+     */
+    public function getBatteryAction()
+    {
+        return self::ACTION;
+    }
 }

@@ -50,22 +50,18 @@ class RdfBatteryClassService extends \tao_models_classes_ClassService
     public function deleteResource(\core_kernel_classes_Resource $resource)
     {
         try {
-            $this->getEventManager()->trigger(new BatteryBeforeRemoveEvent($resource->getUri()));
+            $this->getEventManager()->trigger(new BatteryBeforeRemoveEvent($resource, []));
             $result = $resource->delete();
+            $this->getEventManager()->trigger(new BatteryRemovedEvent($resource, []));
         }
         catch (\Throwable $e) {
             // If some BatteryBeforeRemoveEvent event handler wants to prevent battery removing and
             // throws the exception we have to ensure that other BatteryRemoveFailedEvent subscribers
             // will be notified
-            $this->getEventManager()->trigger(new BatteryRemoveFailedEvent($resource->getUri()));
+            $this->getEventManager()->trigger(new BatteryRemoveFailedEvent($resource, []));
             /** @noinspection PhpUnhandledExceptionInspection */
             throw $e;
         }
-
-        $resultEvent = $result
-            ? new BatteryRemovedEvent($resource->getUri())
-            : new BatteryRemoveFailedEvent($resource->getUri());
-        $this->getEventManager()->trigger($resultEvent);
 
         return $result;
     }

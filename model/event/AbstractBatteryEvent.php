@@ -16,33 +16,46 @@
  *
  * Copyright (c) 2019 (original work) Open Assessment Technologies SA;
  */
-
 namespace oat\taoBattery\model\event;
 
-use oat\oatbox\event\Event;
+use core_kernel_classes_Resource as Resource;
 
-class AbstractBatteryEvent implements Event
+abstract class AbstractBatteryEvent implements BatteryEventInterface
 {
     /**
-     * @var string
+     * @var Resource
      */
-    protected $batteryId;
+    protected $battery;
 
     /**
-     * AbstractBatteryEvent constructor.
-     * @param string $batteryId
+     * @var array
      */
-    public function __construct($batteryId)
+    protected $newValues;
+
+    /**
+     * @param Resource $battery
+     * @param array $newValues
+     */
+    public function __construct(Resource $battery, array $newValues)
     {
-        $this->batteryId = $batteryId;
+        $this->battery = $battery;
+        $this->newValues = $newValues;
     }
 
     /**
-     * @return string
+     * @return Resource
      */
-    public function getBatteryId()
+    public function getBattery()
     {
-        return $this->batteryId;
+        return $this->battery;
+    }
+
+    /**
+     * @return array
+     */
+    public function getNewValues()
+    {
+        return $this->newValues;
     }
 
     /**
@@ -52,4 +65,20 @@ class AbstractBatteryEvent implements Event
     {
         return static::class;
     }
+
+    /**
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        return [
+            'subject' => $this->battery->getUri(),
+            'changes' => $this->newValues
+        ];
+    }
+
+    /**
+     * @return string
+     */
+    abstract public function getBatteryAction();
 }

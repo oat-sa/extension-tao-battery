@@ -19,9 +19,13 @@
 
 namespace oat\taoBattery\model\event;
 
-class BatteryBeforeRemoveEvent extends AbstractBatteryEvent
+/**
+ * Class BatteryCreatedEvent
+ * @package oat\taoBattery\model\event
+ */
+class BatteryCreatedEvent extends AbstractBatteryEvent
 {
-    const ACTION = 'Before battery removal';
+    const ACTION = 'Battery created';
 
     /**
      * @return string
