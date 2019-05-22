@@ -91,13 +91,14 @@ class Battery extends \tao_actions_RdfController
         $item = $this->getClassService()->createInstance($clazz, $label);
         $this->getEventManager()->trigger(new BatteryCreatedEvent($item, [$label]));
 
-        if(! is_null($item)){
+        if(!is_null($item)) {
             $response = array(
                 'label'	=> $item->getLabel(),
-                'uri' 	=> $item->getUri()
+                'uri' 	=> $item->getUri(),
+                'success' 	=> true,
             );
         } else {
-            $response = false;
+            $response = ['success' => false];
         }
 
         $this->returnJson($response);
