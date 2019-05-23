@@ -24,14 +24,18 @@ use common_Exception;
 use common_exception_IsAjaxAction;
 use oat\generis\model\kernel\persistence\smoothsql\search\filter\Filter;
 use oat\generis\model\kernel\persistence\smoothsql\search\filter\FilterOperator;
+use oat\oatbox\event\EventManagerAwareTrait;
 use oat\tao\model\Tree\GetTreeRequest;
 use oat\tao\model\Tree\GetTreeService;
 use oat\taoBattery\model\BatteryException;
+use oat\taoBattery\model\event\BatteryModifiedEvent;
 use oat\taoBattery\model\service\BatteryService;
 use oat\taoDeliveryRdf\model\DeliveryAssemblyService;
 
 class DeliveryTree extends \tao_actions_GenerisTree
 {
+    use EventManagerAwareTrait;
+
     /**
      * @throws common_Exception
      * @throws common_exception_IsAjaxAction
@@ -73,12 +77,15 @@ class DeliveryTree extends \tao_actions_GenerisTree
                 $this->getBatteryService()->deleteDeliveryFromBatteries($this->getResource($delivery));
             }
         } catch (BatteryException $e) {
-            echo json_encode(array('saved' => false));
+            $this->returnJson(['saved' => false]);
             return;
         }
 
         $success = $resource->editPropertyValues($property, $values);
-        echo json_encode(array('saved' => $success));
+
+        $this->getEventManager()->trigger(new BatteryModifiedEvent($resource, [$property->getUri() => $values]));
+
+        $this->returnJson(['saved' => $success]);
     }
 
     /**
