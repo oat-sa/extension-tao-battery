@@ -28,7 +28,7 @@ return array(
     'label' => 'taoBattery extension',
     'description' => 'An extension to assign test-takers to a battery of deliveries instead of one delivery',
     'license' => 'GPL-2.0',
-    'version' => '0.6.5',
+    'version' => '0.6.7',
     'author' => 'Open Assessment Technologies SA',
     'requires' => array(
         'tao' => '>=21.15.0',
