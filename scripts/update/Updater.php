@@ -32,6 +32,9 @@ use oat\taoBattery\model\picker\random\RandomDeliveryPicker;
 use oat\taoBattery\model\service\BatteryService;
 use oat\taoBattery\model\service\rdf\RdfBatteryService;
 
+/**
+ * @deprecated use migrations instead. See https://github.com/oat-sa/generis/wiki/Tao-Update-Process
+ */
 class Updater extends \common_ext_ExtensionUpdater
 {
     public function update($initialVersion)
@@ -84,6 +87,11 @@ class Updater extends \common_ext_ExtensionUpdater
         }
 
         $this->skip('0.6.4', '0.6.7');
+        
+        //Updater files are deprecated. Please use migrations.
+        //See: https://github.com/oat-sa/generis/wiki/Tao-Update-Process
+
+        $this->setVersion($this->getExtension()->getManifest()->getVersion());
     }
 
 }
